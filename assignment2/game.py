@@ -15,9 +15,9 @@ class QuizGame:
             choice = input("선택: ").strip() # 입력값 공백제거
 
             if choice == "1":
-                print("퀴즈 풀기")
+                self.play_quiz()
             elif choice == "2":
-                print("퀴즈 추가")
+                self.add_quiz()
             elif choice == "3":
                 print("퀴즈 목록")
             elif choice == "4":
@@ -35,7 +35,7 @@ class QuizGame:
         #__init__(self,question, choices, answer)
         q1 = Quiz(
             "파이썬 만든 사람은?",
-            ["Guido", "Linus", "James", "Mark"], 
+            ["Guido", "Linus", "James", "Mark"], #choices는 이미 리스트
             1
         )
 
@@ -66,3 +66,48 @@ class QuizGame:
                 print("오답!")
 
         print(f"총 점수: {score}/{len(self.quizzes)}")
+
+    def add_quiz(self):
+        print("\n새로운 퀴즈를 추가합니다.")
+
+        # 문제 입력
+        question = input("문제를 입력하세요: ").strip()
+        if not question: #False 값 반환용
+            print("문제는 비어있을 수 없습니다.")
+            return
+
+        # 선택지 입력
+        choices = []
+        for i in range(4):
+            while True:
+                choice = input(f"선택지 {i+1}: ").strip() #i>0부터 시작
+                if choice:
+                    choices.append(choice)
+                    break
+                else:
+                    print("선택지는 비어있을 수 없습니다.")
+
+        # 정답 입력(예외처리 구현)
+        while True:
+            answer = input("정답 번호 (1~4): ").strip()
+
+            if not answer: #빈 값 반환
+                print("값을 입력하세요.")
+                continue
+
+            if not answer.isdigit(): #기타문자 반환
+                print("숫자를 입력하세요.")
+                continue
+
+            answer = int(answer)
+
+            if 1 <= answer <= 4:
+                break
+            else:
+                print("1~4 사이의 숫자를 입력하세요.")
+
+        # Quiz 객체 생성 및 추가
+        new_quiz = Quiz(question, choices, answer)
+        self.quizzes.append(new_quiz)
+
+        print("퀴즈가 추가되었습니다!")
