@@ -13,3 +13,6 @@ class Quiz:
 
     def check_answer(self, user_input): #game.py에 True or False 반환e
         return user_input == self.answer
+
+    def __repr__(self):
+        return f"Quiz(question='{self.question[:20]}...', answer={self.answer})"
