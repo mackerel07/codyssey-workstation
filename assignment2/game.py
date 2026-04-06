@@ -10,25 +10,36 @@ class QuizGame:
         print("5.종료")
 
     def run(self):
-        while True:
-            self.show_menu()   
+        try:
+            while True:
+                self.show_menu()   
 
-            choice = input("선택: ").strip() # 입력값 공백제거
+                choice = input("선택: ").strip() # 입력값 공백제거
 
-            if choice == "1":
-                self.play_quiz()
-            elif choice == "2":
-                self.add_quiz()
-            elif choice == "3":
-                self.show_quizzes()
-            elif choice == "4":
-                self.show_score()
-            elif choice == "5":
+                if choice == "1":
+                    self.play_quiz()
+                elif choice == "2":
+                    self.add_quiz()
+                elif choice == "3":
+                    self.show_quizzes()
+                elif choice == "4":
+                    self.show_score()
+                elif choice == "5":
+                    self.save_data()
+                    print("저장 후 종료합니다.")
+                    break
+                else:
+                    print("잘못된 입력입니다.")
+        except (KeyboardInterrupt, EOFError):
+            print("\n프로그램이 중단되었습니다.")
+
+            try:            #안전저장 시도 *********
                 self.save_data()
-                print("저장 후 종료합니다.")
-                break
-            else:
-                print("잘못된 입력입니다.")
+                print("데이터를 저장하고 안전하게 종료합니다.")
+            except Exception:
+                print("저장 중 오류가 발생했습니다.")
+
+
 
     def __init__(self): #QuizGame의 생성자(매갸변수 필요x) **
         self.quizzes = []
@@ -191,6 +202,11 @@ class QuizGame:
 
         except FileNotFoundError:
             print("저장 파일이 없습니다. 기본 데이터 사용.")
+
+        except json.JSONDecodeError: #파일 손상되었을떄
+            print("저장 파일이 손상되었습니다. 데이터를 초기화합니다.")
+            self.quizzes = []
+            self.best_score = 0
 
 if __name__ == "__main__": #직접 실행시킬 때만 작동(import과정에서 게임이 시작되는 걸 방지함)
     game = QuizGame() #클래스로부터 객체생성
