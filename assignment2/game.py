@@ -60,8 +60,31 @@ class QuizGame:
                 2
             )
 
+            q3 = Quiz(
+                "파이썬에서 리스트의 길이를 구하는 함수는?",
+                ["size()", "length()", "len()", "count()"],
+                3
+            )
+
+            q4 = Quiz(
+                "파이썬의 파일 확장자는?",
+                [".java", ".py", ".cpp", ".txt"],
+                2
+            )
+
+            q5 = Quiz(
+                "반복문에서 사용되는 키워드는?",
+                ["if", "for", "def", "class"],
+                2
+            )
+
+
             self.quizzes.append(q1)
             self.quizzes.append(q2)
+            self.quizzes.append(q3)
+            self.quizzes.append(q4)
+            self.quizzes.append(q5)
+
 
 
     def play_quiz(self):
