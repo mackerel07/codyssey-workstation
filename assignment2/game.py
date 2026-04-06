@@ -141,32 +141,32 @@ class QuizGame:
         else:
             print(f"최고 점수: {self.best_score}")   
 
-    def save_data(self):
-        data = {
-            "quizzes": [],
-            "best_score": self.best_score
+    def save_data(self): #***********************
+        data = {           #JSON 딕셔너리 구조
+            "quizzes": [],  #빈 리스트 생성
+            "best_score": self.best_score  #최고점수
         }
 
-        for q in self.quizzes:
-            quiz_data = {
+        for q in self.quizzes: #q1, q2...
+            quiz_data = {       #딕셔너리 변환
                 "question": q.question,
                 "choices": q.choices,
                 "answer": q.answer
             }
-            data["quizzes"].append(quiz_data)
+            data["quizzes"].append(quiz_data) #아까 생성한 빈 리스트
 
-        with open("state.json", "w", encoding="utf-8") as f:
-            json.dump(data, f, ensure_ascii=False, indent=4)
+        with open("state.json", "w", encoding="utf-8") as f: #with문(안전), 덮어쓰기, 한글깨짐방지
+            json.dump(data, f, ensure_ascii=False, indent=4) #저장, 한글그대로, 들여쓰기
 
     def load_data(self):
-        try:
-            with open("state.json", "r", encoding="utf-8") as f:
-                data = json.load(f)
+        try:        #오류 대비
+            with open("state.json", "r", encoding="utf-8") as f: #읽기모드
+                data = json.load(f) #파이썬 데이터로 변환(파이썬>딕셔너리)
 
             self.best_score = data.get("best_score", 0)
 
-            self.quizzes = []
-            for q in data.get("quizzes", []):
+            self.quizzes = [] #리스트 초기화
+            for q in data.get("quizzes", []): #딕셔너리 객체변환
                 quiz = Quiz(q["question"], q["choices"], q["answer"])
                 self.quizzes.append(quiz)
 
