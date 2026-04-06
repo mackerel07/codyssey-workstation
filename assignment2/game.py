@@ -1,4 +1,4 @@
- class QuizGame:
+class QuizGame:
     def show_menu(self):
         print("1.퀴즈 풀기")
         print("2.퀴즈 추가")
@@ -25,3 +25,5 @@
                 break
             else:
                 print("잘못된 입력입니다.")
+
+   
