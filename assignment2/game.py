@@ -30,7 +30,7 @@ class QuizGame:
 
     def __init__(self): #QuizGame의 생성자(매갸변수 필요x) **
         self.quizzes = []
-        self.best_score = 0
+        self.best_score = 0 #최고기록 확인
 
         #__init__(self,question, choices, answer)
         q1 = Quiz(
@@ -59,13 +59,18 @@ class QuizGame:
             q.show()
             answer = int(input("정답: "))
 
-            if q.check_answer(answer):
+            if q.check_answer(answer): #? *******************
                 print("정답!")
                 score += 1
             else:
                 print("오답!")
 
-        print(f"총 점수: {score}/{len(self.quizzes)}")
+        print(f"총 점수: {score}/{len(self.quizzes)}") #len>리스트길이(문제개수)
+
+        #최고 점수 갱신
+        if score > self.best_score:
+            self.best_score = score
+            print("새로운 최고 점수입니다!")
 
     def add_quiz(self):
         print("\n새로운 퀴즈를 추가합니다.")
@@ -121,7 +126,13 @@ class QuizGame:
 
         print("-" * 40)
 
-        for i, q in enumerate(self.quizzes, 1):
-            print(f"[{i}] {q.question}")
+        for i, q in enumerate(self.quizzes, 1): #q = q1, q2, ...
+            print(f"[{i}] {q.question}") #q1.question, q2.question...(Quiz클래스의 question부분)
 
         print("-" * 40)
+
+    def show_score(self):
+        if self.best_score == 0:
+            print("아직 기록이 없습니다.")
+        else:
+            print(f"최고 점수: {self.best_score}")   
