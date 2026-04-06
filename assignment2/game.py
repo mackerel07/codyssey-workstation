@@ -61,7 +61,7 @@ class QuizGame:
 
         for q in self.quizzes: # q = q1, q2, q3
             q.show()
-            while True:
+            while True:     #예외처리 구현
                 answer = input("정답: ").strip()
 
                 if not answer: #빈 값 반환
@@ -72,10 +72,10 @@ class QuizGame:
                     print("숫자를 입력하세요.")
                     continue
 
-                answer = int(answer)
+                answer = int(answer)    #입력값이 문자열인지 확인하기 위해 나중에 정수열 처리
                 break
 
-            if q.check_answer(answer): #? *******************
+            if q.check_answer(answer): #True/False(q1.user_input, q2.user_input...)
                 print("정답!")
                 score += 1
             else:
@@ -187,8 +187,8 @@ class QuizGame:
         except FileNotFoundError:
             print("저장 파일이 없습니다. 기본 데이터 사용.")
 
-if __name__ == "__main__":
-    game = QuizGame()
-    game.run()
+if __name__ == "__main__": #직접 실행시킬 때만 작동(import과정에서 게임이 시작되는 걸 방지함)
+    game = QuizGame() #클래스로부터 객체생성
+    game.run() #run(self)실행
 
     
