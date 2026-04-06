@@ -61,7 +61,19 @@ class QuizGame:
 
         for q in self.quizzes: # q = q1, q2, q3
             q.show()
-            answer = int(input("정답: "))
+            while True:
+                answer = input("정답: ").strip()
+
+                if not answer: #빈 값 반환
+                    print("값을 입력하세요.")
+                    continue
+
+                if not answer.isdigit(): #기타문자 반환
+                    print("숫자를 입력하세요.")
+                    continue
+
+                answer = int(answer)
+                break
 
             if q.check_answer(answer): #? *******************
                 print("정답!")
@@ -174,5 +186,9 @@ class QuizGame:
 
         except FileNotFoundError:
             print("저장 파일이 없습니다. 기본 데이터 사용.")
+
+if __name__ == "__main__":
+    game = QuizGame()
+    game.run()
 
     
