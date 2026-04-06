@@ -1,3 +1,4 @@
+import json
 from quiz import Quiz #quiz.py와 연동
 
 class QuizGame:
@@ -21,9 +22,10 @@ class QuizGame:
             elif choice == "3":
                 self.show_quizzes()
             elif choice == "4":
-                print("점수 확인")
+                self.show_score()
             elif choice == "5":
-                print("종료합니다.")
+                self.save_data()
+                print("저장 후 종료합니다.")
                 break
             else:
                 print("잘못된 입력입니다.")
@@ -47,6 +49,8 @@ class QuizGame:
 
         self.quizzes.append(q1)
         self.quizzes.append(q2)
+
+        self.load_data() # 저장된 데이터 불러오기
 
     def play_quiz(self):
         if not self.quizzes: #빈 리스트는 False(if not False)
@@ -136,3 +140,39 @@ class QuizGame:
             print("아직 기록이 없습니다.")
         else:
             print(f"최고 점수: {self.best_score}")   
+
+    def save_data(self):
+        data = {
+            "quizzes": [],
+            "best_score": self.best_score
+        }
+
+        for q in self.quizzes:
+            quiz_data = {
+                "question": q.question,
+                "choices": q.choices,
+                "answer": q.answer
+            }
+            data["quizzes"].append(quiz_data)
+
+        with open("state.json", "w", encoding="utf-8") as f:
+            json.dump(data, f, ensure_ascii=False, indent=4)
+
+    def load_data(self):
+        try:
+            with open("state.json", "r", encoding="utf-8") as f:
+                data = json.load(f)
+
+            self.best_score = data.get("best_score", 0)
+
+            self.quizzes = []
+            for q in data.get("quizzes", []):
+                quiz = Quiz(q["question"], q["choices"], q["answer"])
+                self.quizzes.append(quiz)
+
+            print("저장된 데이터를 불러왔습니다.")
+
+        except FileNotFoundError:
+            print("저장 파일이 없습니다. 기본 데이터 사용.")
+
+    
