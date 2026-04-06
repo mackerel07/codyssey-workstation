@@ -19,7 +19,7 @@ class QuizGame:
             elif choice == "2":
                 self.add_quiz()
             elif choice == "3":
-                print("퀴즈 목록")
+                self.show_quizzes()
             elif choice == "4":
                 print("점수 확인")
             elif choice == "5":
@@ -111,3 +111,17 @@ class QuizGame:
         self.quizzes.append(new_quiz)
 
         print("퀴즈가 추가되었습니다!")
+
+    def show_quizzes(self):
+        print("\n등록된 퀴즈 목록")
+
+        if not self.quizzes: #False값 반환
+            print("퀴즈가 없습니다.")
+            return
+
+        print("-" * 40)
+
+        for i, q in enumerate(self.quizzes, 1):
+            print(f"[{i}] {q.question}")
+
+        print("-" * 40)
