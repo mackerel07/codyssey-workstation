@@ -34,23 +34,24 @@ class QuizGame:
         self.quizzes = []
         self.best_score = 0 #최고기록 확인
 
+        self.load_data()
+        if not self.quizzes: #파일 없을때만 기본데이터 추가
         #__init__(self,question, choices, answer)
-        q1 = Quiz(
-            "파이썬 만든 사람은?",
-            ["Guido", "Linus", "James", "Mark"], #choices는 이미 리스트
-            1
-        )
+            q1 = Quiz(
+                "파이썬 만든 사람은?",
+                ["Guido", "Linus", "James", "Mark"], #choices는 이미 리스트
+                1
+            )
 
-        q2 = Quiz(
-            "리눅스 만든 사람은?",
-            ["Guido", "Linus", "James", "Mark"],
-            2
-        )
+            q2 = Quiz(
+                "리눅스 만든 사람은?",
+                ["Guido", "Linus", "James", "Mark"],
+                2
+            )
 
-        self.quizzes.append(q1)
-        self.quizzes.append(q2)
+            self.quizzes.append(q1)
+            self.quizzes.append(q2)
 
-        self.load_data() # 저장된 데이터 불러오기
 
     def play_quiz(self):
         if not self.quizzes: #빈 리스트는 False(if not False)
@@ -73,7 +74,11 @@ class QuizGame:
                     continue
 
                 answer = int(answer)    #입력값이 문자열인지 확인하기 위해 나중에 정수열 처리
-                break
+                
+                if 1 <= answer <= 4: #예외처리
+                    break
+                else:
+                    print(f"1~4 사이의 숫자를 입력하세요.")
 
             if q.check_answer(answer): #True/False(q1.user_input, q2.user_input...)
                 print("정답!")
